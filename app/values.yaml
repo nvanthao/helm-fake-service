@@ -22,3 +22,5 @@ ingress-nginx:
   controller:
     service:
       type: NodePort
+  ingressClassResource:
+    default: true
