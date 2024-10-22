@@ -1,0 +1,24 @@
+imagePullSecrets: []
+
+image:
+  repository: nicholasjackson/fake-service
+  tag: v0.26.2
+  pullPolicy: IfNotPresent
+
+frontend:
+  message: "Hello from frontend!"
+  serverType: "http"
+  logLevel: "debug"
+  port: 9090
+
+backend:
+  message: "Hello from backend!"
+  serverType: "http"
+  logLevel: "debug"
+  port: 9091
+
+ingress-nginx:
+  enabled: true
+  controller:
+    service:
+      type: NodePort
