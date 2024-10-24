@@ -1,0 +1,32 @@
+apiVersion: kots.io/v1beta1
+kind: Config
+metadata:
+  name: fake-service
+spec:
+  groups:
+    - name: Global settings
+      title: Global settings
+      description: Global settings
+      items:
+        - name: hostname
+          title: Hostname
+          type: string
+          required: true
+    - name: Frontend settings
+      title: Frontend settings
+      description: Frontend settings
+      items:
+        - name: message
+          title: Message
+          type: string
+          required: true
+          default: Hello from frontend!
+    - name: Backend settings
+      title: Backend settings
+      description: Backend settings
+      items:
+        - name: message
+          title: Message
+          type: string
+          required: true
+          default: Hello from backend!
