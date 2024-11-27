@@ -16,12 +16,16 @@ spec:
       title: Frontend settings
       description: Frontend settings
       items:
-        - name: message
+        - name: frontend_name
+          title: Service Name
+          type: text
+          required: true
+        - name: frontend_message
           title: Message
           type: text
           required: true
           default: Hello from frontend!
-        - name: logLevel
+        - name: frontend_log_level
           title: Log level
           type: radio
           default: debug
@@ -40,12 +44,16 @@ spec:
       title: Backend settings
       description: Backend settings
       items:
-        - name: message
+        - name: backend_name
+          title: Service Name
+          type: text
+          required: true
+        - name: backend_message
           title: Message
           type: text
           required: true
           default: Hello from backend!
-        - name: logLevel
+        - name: backend_log_level
           title: Log level
           type: radio
           default: debug

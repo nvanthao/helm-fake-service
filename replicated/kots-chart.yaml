@@ -5,5 +5,13 @@ metadata:
 spec:
   chart:
     name: fake-service
-    chartVersion: 0.0.1
-chartVersion: null
+    chartVersion: 0.2.0
+  values:
+    frontend:
+      name: repl{{ ConfigOption "frontend_name" }}
+      message: repl{{ ConfigOption "frontend_message" }}
+      logLevel: repl{{ ConfigOption "frontend_log_level" }}
+    backend:
+      name: repl{{ ConfigOption "backend_name" }}
+      message: repl{{ ConfigOption "backend_message" }}
+      logLevel: repl{{ ConfigOption "backend_log_level" }}

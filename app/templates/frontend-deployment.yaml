@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           env:
             - name: NAME
-              value: frontend
+              value: {{ .Values.frontend.name }}
             - name: MESSAGE
               value: "{{ .Values.frontend.message }}"
             - name: LISTEN_ADDR

@@ -6,12 +6,14 @@ image:
   pullPolicy: IfNotPresent
 
 frontend:
+  name: "frontend"
   message: "Hello from frontend!"
   serverType: "http"
   logLevel: "debug"
   port: 9090
 
 backend:
+  name: "backend"
   message: "Hello from backend!"
   serverType: "http"
   logLevel: "debug"
@@ -22,5 +24,7 @@ ingress-nginx:
   controller:
     service:
       type: NodePort
+      nodePorts:
+        http: 30080
   ingressClassResource:
     default: true

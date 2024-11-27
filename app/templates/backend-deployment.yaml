@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           env:
             - name: NAME
-              value: backend
+              value: {{ .Values.backend.name }}
             - name: MESSAGE
               value: "{{ .Values.backend.message }}"
             - name: LISTEN_ADDR
