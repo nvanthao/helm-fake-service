@@ -10,23 +10,53 @@ spec:
       items:
         - name: hostname
           title: Hostname
-          type: string
-          required: true
+          type: text
+          required: false
     - name: Frontend settings
       title: Frontend settings
       description: Frontend settings
       items:
         - name: message
           title: Message
-          type: string
+          type: text
           required: true
           default: Hello from frontend!
+        - name: logLevel
+          title: Log level
+          type: radio
+          default: debug
+          items:
+            - name: debug
+              title: Debug
+            - name: info
+              title: Info
+            - name: warn
+              title: Warn
+            - name: error
+              title: Error
+            - name: trace
+              title: Trace
     - name: Backend settings
       title: Backend settings
       description: Backend settings
       items:
         - name: message
           title: Message
-          type: string
+          type: text
           required: true
           default: Hello from backend!
+        - name: logLevel
+          title: Log level
+          type: radio
+          default: debug
+          items:
+            - name: debug
+              title: Debug
+            - name: info
+              title: Info
+            - name: warn
+              title: Warn
+            - name: error
+              title: Error
+            - name: trace
+              title: Trace

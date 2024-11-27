@@ -60,12 +60,12 @@ app.kubernetes.io/name: {{ include "fake-service.name" . }}-backend
 Frontend service name
 */}}
 {{- define "fake-service.frontend.name" -}}
-{{- include "fake-service.fullname" . }}-frontend
+frontend-service
 {{- end }}
 
 {{/*
 Backend service name
 */}}
 {{- define "fake-service.backend.name" -}}
-{{- include "fake-service.fullname" . }}-backend
+backend-service
 {{- end }}
