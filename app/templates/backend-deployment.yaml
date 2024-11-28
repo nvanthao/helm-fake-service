@@ -36,3 +36,5 @@ spec:
               value: "{{ .Values.backend.serverType }}"
             - name: LOG_LEVEL
               value: "{{ .Values.backend.logLevel }}"
+            - name: ERROR_RATE
+              value: "{{ .Values.backend.errorRate }}"

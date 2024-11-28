@@ -18,6 +18,7 @@ backend:
   serverType: "http"
   logLevel: "debug"
   port: 9091
+  errorRate: 0
 
 ingress-nginx:
   enabled: true
