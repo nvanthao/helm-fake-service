@@ -5,8 +5,13 @@ metadata:
 spec:
   chart:
     name: fake-service
-    chartVersion: 0.2.0
+    chartVersion: 0.3.0
   values:
+    image:
+      registry: '{{repl HasLocalRegistry | ternary LocalRegistryHost "proxy.replicated.com" }}'
+      repository: '{{repl HasLocalRegistry | ternary LocalRegistryNamespace "" }}/nicholasjackson/fake-service'
+      pullSecrets:
+      - name: '{{repl ImagePullSecretName }}'
     frontend:
       name: repl{{ ConfigOption "frontend_name" }}
       message: repl{{ ConfigOption "frontend_message" }}

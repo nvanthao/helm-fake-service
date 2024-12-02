@@ -1,9 +1,11 @@
 imagePullSecrets: []
 
 image:
+  registry: docker.io
   repository: nicholasjackson/fake-service
   tag: v0.26.2
   pullPolicy: IfNotPresent
+  pullSecrets: []
 
 frontend:
   name: "frontend"

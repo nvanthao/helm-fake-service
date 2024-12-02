@@ -1,7 +1,7 @@
 REPLICATED_APP=gerard-helm-fake-service
 REPLICATED_DIR=$(shell pwd)/replicated
 CHART_DIR=$(shell pwd)/app
-CHART_VERSION=0.2.0
+CHART_VERSION=0.3.0
 CHANNELS=Stable Unstable Beta
 
 
