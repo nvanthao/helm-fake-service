@@ -1,9 +1,8 @@
 REPLICATED_APP=gerard-helm-fake-service
 REPLICATED_DIR=$(shell pwd)/replicated
 CHART_DIR=$(shell pwd)/app
-CHART_VERSION=0.3.0
+CHART_VERSION=0.5.0
 CHANNELS=Stable Unstable Beta
-
 
 clean-charts:
 	rm -rf $(REPLICATED_DIR)/*.tgz
@@ -20,6 +19,9 @@ helm-dep-list:
 
 helm-install-dry-run:
 	helm install $(REPLICATED_APP) --dry-run --debug $(CHART_DIR)
+
+helm-template:
+	helm template $(REPLICATED_APP) $(CHART_DIR)
 
 helm-install:
 	helm install $(REPLICATED_APP) --debug --wait $(CHART_DIR)

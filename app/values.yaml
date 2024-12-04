@@ -1,11 +1,9 @@
-imagePullSecrets: []
-
 image:
   registry: docker.io
   repository: nicholasjackson/fake-service
   tag: v0.26.2
   pullPolicy: IfNotPresent
-  pullSecrets: []
+  imagePullSecrets: []
 
 frontend:
   name: "frontend"
@@ -21,10 +19,22 @@ backend:
   logLevel: "debug"
   port: 9091
   errorRate: 0
+  origin: "*"
 
 ingress-nginx:
   enabled: true
+  imagePullSecrets: []
   controller:
+    image:
+      registry: registry.k8s.io
+      image: ingress-nginx/controller
+      tag: v1.11.3
+    admissionWebhooks:
+      patch:
+        image:
+          registry: registry.k8s.io
+          image: ingress-nginx/kube-webhook-certgen
+          tag: v1.4.4
     service:
       type: NodePort
       nodePorts:
