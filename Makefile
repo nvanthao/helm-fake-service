@@ -48,4 +48,3 @@ replicated-promote:
 
 sync-platform-examples:
 	rsync -av --exclude '.git' . /Users/gerard/dev/platform-examples/applications/fake-services/
-
