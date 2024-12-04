@@ -47,4 +47,4 @@ replicated-promote:
 	done
 
 sync-platform-examples:
-	rsync -av --exclude '.git' . /Users/gerard/dev/platform-examples/applications/fake-services/
+	rsync -av --exclude '.git' --exclude '.gitignore' . /Users/gerard/dev/platform-examples/applications/fake-services/
