@@ -45,3 +45,7 @@ replicated-promote:
 		echo "Promoting release sequence $(SEQUENCE) to $$channel channel..."; \
 		replicated release promote $(SEQUENCE) $$channel; \
 	done
+
+sync-platform-examples:
+	rsync -av --exclude '.git' . /Users/gerard/dev/platform-examples/applications/fake-services/
+
