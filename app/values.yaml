@@ -29,12 +29,14 @@ ingress-nginx:
       registry: registry.k8s.io
       image: ingress-nginx/controller
       tag: v1.11.3
+      digest: ""
     admissionWebhooks:
       patch:
         image:
           registry: registry.k8s.io
           image: ingress-nginx/kube-webhook-certgen
           tag: v1.4.4
+          digest: ""
     service:
       type: NodePort
       nodePorts:
