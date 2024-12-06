@@ -113,7 +113,7 @@ jobs:
         run: |
           echo "Running a test..."
           echo "${{ steps.create-cluster.outputs.cluster-kubeconfig }}" > kubeconfig.yaml
-          sleep 30
+          sleep 60
           kubectl port-forward svc/frontend-service --pod-running-timeout=2m --kubeconfig='./kubeconfig.yaml' 8080:80 &
           curl -f http://localhost:8080
           echo "Test complete"
