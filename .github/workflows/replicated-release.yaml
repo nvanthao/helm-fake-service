@@ -90,6 +90,7 @@ jobs:
           channel-slug: ${{ needs.push-to-replicated.outputs.channel-slug }}
           customer-email: ${{ env.VERSION }}@example.com
           expires-in: 14
+          license-type: dev
 
       - name: Create Cluster
         id: create-cluster
@@ -129,24 +130,24 @@ jobs:
           api-token: ${{ secrets.REPLICATED_API_TOKEN }}
           cluster-id: ${{ steps.create-cluster.outputs.cluster-id }}
 
-      - name: Archive Customer
-        id: archive-customer
-        if: always()
-        uses: replicatedhq/replicated-actions/archive-customer@v1
-        with:
-          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
-          customer-id:  ${{ steps.create-customer.outputs.customer-id }}
+      # - name: Archive Customer
+      #   id: archive-customer
+      #   if: always()
+      #   uses: replicatedhq/replicated-actions/archive-customer@v1
+      #   with:
+      #     api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+      #     customer-id:  ${{ steps.create-customer.outputs.customer-id }}
 
-  cleanup-channel:
-    needs: 
-      - compatibility-matrix
-      - push-to-replicated
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
-      - name: Archive Replicated Channel
-        uses: replicatedhq/replicated-actions/archive-channel@v1
-        with:
-          app-slug: ${{ secrets.REPLICATED_APP }}
-          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
-          channel-slug: ${{ needs.push-to-replicated.outputs.channel-slug }}  
+  # cleanup-channel:
+  #   needs: 
+  #     - compatibility-matrix
+  #     - push-to-replicated
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Archive Replicated Channel
+  #       uses: replicatedhq/replicated-actions/archive-channel@v1
+  #       with:
+  #         app-slug: ${{ secrets.REPLICATED_APP }}
+  #         api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+  #         channel-slug: ${{ needs.push-to-replicated.outputs.channel-slug }}  
