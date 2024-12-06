@@ -111,11 +111,10 @@ jobs:
       - name: Run a test
         # mask the kubeconfig so it doesn't show up in the logs
         run: |
-          echo "Running a test"
+          echo "Running a test..."
           echo "${{ steps.create-cluster.outputs.cluster-kubeconfig }}" > kubeconfig.yaml
-          sleep 60
+          sleep 30
           kubectl port-forward svc/frontend-service --pod-running-timeout=2m --kubeconfig='./kubeconfig.yaml' 8080:80 &
-          sleep 120
           curl -f http://localhost:8080
           echo "Test complete"
 
@@ -127,24 +126,41 @@ jobs:
           api-token: ${{ secrets.REPLICATED_API_TOKEN }}
           cluster-id: ${{ steps.create-cluster.outputs.cluster-id }}
 
-      # - name: Archive Customer
-      #   id: archive-customer
-      #   if: always()
-      #   uses: replicatedhq/replicated-actions/archive-customer@v1
-      #   with:
-      #     api-token: ${{ secrets.REPLICATED_API_TOKEN }}
-      #     customer-id:  ${{ steps.create-customer.outputs.customer-id }}
+      - name: Archive Customer
+        id: archive-customer
+        if: always()
+        uses: replicatedhq/replicated-actions/archive-customer@v1
+        with:
+          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+          customer-id:  ${{ steps.create-customer.outputs.customer-id }}
 
-  # cleanup-channel:
-  #   needs: 
-  #     - compatibility-matrix
-  #     - push-to-replicated
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Archive Replicated Channel
-  #       uses: replicatedhq/replicated-actions/archive-channel@v1
-  #       with:
-  #         app-slug: ${{ secrets.REPLICATED_APP }}
-  #         api-token: ${{ secrets.REPLICATED_API_TOKEN }}
-  #         channel-slug: ${{ needs.push-to-replicated.outputs.channel-slug }}  
+  promote-to-stable:
+    needs: 
+      - compatibility-matrix
+      - push-to-replicated
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Promote to Stable channel
+        uses: replicatedhq/replicated-actions/promote-release@v1
+        with:
+          app-slug: ${{ secrets.REPLICATED_APP }}
+          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+          channel-to: stable
+          release-sequence: ${{ needs.push-to-replicated.outputs.release-sequence }}
+          release-version: ${{ env.VERSION }}
+
+  cleanup-channel:
+    needs: 
+      - compatibility-matrix
+      - push-to-replicated
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Archive Replicated Channel
+        uses: replicatedhq/replicated-actions/archive-channel@v1
+        with:
+          app-slug: ${{ secrets.REPLICATED_APP }}
+          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+          channel-slug: ${{ needs.push-to-replicated.outputs.channel-slug }}  
