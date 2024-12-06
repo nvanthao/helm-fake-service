@@ -17,6 +17,7 @@ jobs:
     outputs:
       channel-slug: ${{ steps.create-release.outputs.channel-slug }}
       release-sequence: ${{ steps.create-release.outputs.release-sequence }}
+      app-version: ${{ steps.set-release-version.outputs.VERSION }}
     steps:
       - uses: actions/checkout@v3
 
@@ -151,7 +152,7 @@ jobs:
           api-token: ${{ secrets.REPLICATED_API_TOKEN }}
           channel-to: stable
           release-sequence: ${{ needs.push-to-replicated.outputs.release-sequence }}
-          release-version: ${{ env.VERSION }}
+          release-version: ${{ needs.push-to-replicated.outputs.app-version }}
 
   cleanup-channel:
     needs: 
