@@ -99,7 +99,7 @@ jobs:
           kubernetes-distribution: ${{ matrix.cluster.distribution }}
           kubernetes-version: ${{ matrix.cluster.version }}
           cluster-name: ${{ env.VERSION }}-${{ matrix.cluster.distribution }}-${{ matrix.cluster.version }}
-          timeout-minutes: 2
+          timeout-minutes: 5
           ttl: 10m
 
       - name: Deploy the app
