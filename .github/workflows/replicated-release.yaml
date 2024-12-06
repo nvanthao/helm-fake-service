@@ -76,10 +76,6 @@ jobs:
           else
             echo "VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
           fi
-
-      - name: Define App Version
-        run: echo "APP_VERSION=${VERSION//[^a-zA-Z0-9]/}.${GITHUB_RUN_ID}${GITHUB_RUN_ATTEMPT}" >> $GITHUB_ENV
-
       - name: Create Customer 
         id: create-customer
         uses: replicatedhq/replicated-actions/create-customer@v1
@@ -109,7 +105,8 @@ jobs:
           kubeconfig: ${{ steps.create-cluster.outputs.cluster-kubeconfig }}
           app-slug: ${{ secrets.REPLICATED_APP }}/${{ needs.push-to-replicated.outputs.channel-slug }}
           license-file: ${{ steps.create-customer.outputs.license-file }}
-          app-version-label: ${{ env.APP_VERSION }}
+          app-version-label: ${{ env.VERSION }}
+          config-values: ./replicated/kots-sample-config-values.yaml
 
       - name: Run a test
         # mask the kubeconfig so it doesn't show up in the logs
