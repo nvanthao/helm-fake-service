@@ -50,7 +50,7 @@ jobs:
 
       - name: Create Replicated release
         id: create-release
-        uses: replicatedhq/compatibility-actions/create-release@v0
+        uses: replicatedhq/compatibility-actions/create-release@v1
         with:
           app-slug: ${{ secrets.REPLICATED_APP }}
           api-token: ${{ secrets.REPLICATED_API_TOKEN }}
