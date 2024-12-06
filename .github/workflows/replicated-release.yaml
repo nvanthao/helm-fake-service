@@ -1,0 +1,59 @@
+name: replicated-release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Version tag (e.g. v1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  push-to-replicated:
+    runs-on: ubuntu-22.04
+    outputs:
+      channel-slug: ${{ steps.create-release.outputs.channel-slug }}
+      release-sequence: ${{ steps.create-release.outputs.release-sequence }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set release version
+        id: set-release-version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          else
+            echo "VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
+          fi
+
+      - name: Package Helm chart
+        id: package-helm-chart
+        run: |
+          helm package ./app --debug -u -d ./replicated \
+            --version ${{ env.VERSION }} \
+            --app-version ${{ env.VERSION }}
+      
+      - name: Install yq
+        run: |
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq &&\
+          chmod +x /usr/local/bin/yq
+
+      - name: Update HelmChart kind
+        run: |
+          yq -i '.spec.chart.chartVersion = "${{ env.VERSION }}"' replicated/kots-chart.yaml
+      
+      - name: Define Channel name
+        run: echo "CHANNEL_NAME=${{ env.VERSION }}-${GITHUB_RUN_ID}${GITHUB_RUN_ATTEMPT}" >> $GITHUB_ENV
+
+      - name: Create Replicated release
+        id: create-release
+        uses: replicatedhq/compatibility-actions/create-release@v0
+        with:
+          app-slug: ${{ secrets.REPLICATED_APP }}
+          api-token: ${{ secrets.REPLICATED_API_TOKEN }}
+          yaml-dir: ./replicated
+          promote-channel: ${{ env.CHANNEL_NAME }}
+          version: ${{ env.VERSION }}
