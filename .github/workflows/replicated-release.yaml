@@ -113,9 +113,10 @@ jobs:
         run: |
           echo "Running connectivity test..."
           echo "${{ steps.create-cluster.outputs.cluster-kubeconfig }}" > kubeconfig.yaml
+          sleep 60
           kubectl wait --for=condition=ready pods -l app.kubernetes.io/name=fake-service-frontend --timeout=60s --kubeconfig='./kubeconfig.yaml'
           kubectl port-forward svc/frontend-service --pod-running-timeout=2m --kubeconfig='./kubeconfig.yaml' 8080:80 &
-          sleep 10
+          sleep 60
           curl -f http://localhost:8080
           echo "Test complete"
 
