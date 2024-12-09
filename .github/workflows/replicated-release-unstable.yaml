@@ -54,5 +54,5 @@ jobs:
           app-slug: ${{ secrets.REPLICATED_APP }}
           api-token: ${{ secrets.REPLICATED_API_TOKEN }}
           yaml-dir: ./replicated
-          promote-channel: unstable
+          promote-channel: Unstable
           version: ${{ env.VERSION }}
