@@ -28,8 +28,9 @@ jobs:
       - name: Set release version
         id: set-release-version
         run: |
+          git_hash=$(git rev-parse --short HEAD)
           IFS='.' read -r major minor patch <<< "${{ env.LATEST_TAG }}"
-          version="${major}.${minor}.$((patch + 1))-Unstable"
+          version="${major}.${minor}.$((patch + 1))-Unstable-${git_hash}"
           echo "VERSION=${version}" >> $GITHUB_ENV
 
       - name: Package Helm chart
