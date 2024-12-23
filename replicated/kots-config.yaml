@@ -28,7 +28,7 @@ spec:
           title: Message
           type: text
           required: true
-          default: Today is Christmas Eve! Ho Ho Ho!
+          default: Today is Christmas Eve! Ho Ho Ho! DO NOT USE CUSTOM DOMAIN YET!
         - name: frontend_log_level
           title: Log level
           type: radio
