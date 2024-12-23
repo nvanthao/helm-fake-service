@@ -28,7 +28,7 @@ spec:
           title: Message
           type: text
           required: true
-          default: Hello from frontend! I am a new update for KOTS 1.121.2
+          default: Today is Christmas Eve!
         - name: frontend_log_level
           title: Log level
           type: radio
