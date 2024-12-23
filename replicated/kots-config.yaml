@@ -56,7 +56,7 @@ spec:
           title: Message
           type: text
           required: true
-          default: Hello from backend!
+          default: Hello from backend! Happy New Year!
         - name: backend_log_level
           title: Log level
           type: radio
