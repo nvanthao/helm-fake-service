@@ -2,6 +2,10 @@ name: replicated-release-unstable
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g. v1.0.0)'
+        required: false
   push:
     branches:
       - main
@@ -28,9 +32,13 @@ jobs:
       - name: Set release version
         id: set-release-version
         run: |
-          git_hash=$(git rev-parse --short HEAD)
-          IFS='.' read -r major minor patch <<< "${{ env.LATEST_TAG }}"
-          version="${major}.${minor}.$((patch + 1))-Unstable-${git_hash}"
+          if [ -z "${{ github.event.inputs.version }}" ]; then
+            git_hash=$(git rev-parse --short HEAD)
+            IFS='.' read -r major minor patch <<< "${{ env.LATEST_TAG }}"
+            version="${major}.${minor}.$((patch + 1))-Unstable-${git_hash}"
+          else
+            version="${{ github.event.inputs.version }}"
+          fi
           echo "VERSION=${version}" >> $GITHUB_ENV
 
       - name: Package Helm chart
