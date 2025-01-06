@@ -70,6 +70,19 @@ Backend service name
 backend-service
 {{- end }}
 
+{{/*
+Rqlite UI service name
+*/}}
+{{- define "fake-service.rqliteui.name" -}}
+rqlite-ui-service
+{{- end }}
+
+{{/*
+Rqlite UI labels selector
+*/}}
+{{- define "fake-service.rqliteui.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "fake-service.name" . }}-rqliteui
+{{- end }}
 
 {{/*
 Image Pull Secrets
