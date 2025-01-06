@@ -34,7 +34,7 @@ jobs:
         run: |
           if [ -z "${{ github.event.inputs.version }}" ]; then
             git_hash=$(git rev-parse --short HEAD)
-            date_version=$(date -u '+%Y%m%d%H%M%S')
+            date_version=$(date -u '+%Y.%m.%d-%H%M%S')
             version="${date_version}-Unstable-${git_hash}"
           else
             version="${{ github.event.inputs.version }}"
@@ -66,4 +66,3 @@ jobs:
           yaml-dir: ./replicated
           promote-channel: Unstable
           version: ${{ env.VERSION }}
-
