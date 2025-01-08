@@ -85,6 +85,13 @@ app.kubernetes.io/name: {{ include "fake-service.name" . }}-rqliteui
 {{- end }}
 
 {{/*
+Minio UI labels selector
+*/}}
+{{- define "fake-service.minioui.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "fake-service.name" . }}-minioui
+{{- end }}
+
+{{/*
 Image Pull Secrets
 */}}
 {{- define "helpers.imagePullSecrets" -}}
