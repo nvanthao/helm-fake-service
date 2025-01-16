@@ -11,3 +11,20 @@ spec:
       - name: app
         labels:
           app: "true"
+  extensions:
+    helm:
+      repositories:
+        - name: nvidia
+          url: https://nvidia.github.io/gpu-operator
+      charts:
+        - name: gpu-operator
+          chartname: nvidia/gpu-operator
+          namespace: gpu-operator
+          version: "v24.9.1"
+          values: |
+            toolkit:
+             env:
+             - name: CONTAINERD_CONFIG
+               value: /etc/k0s/containerd.d/nvidia.toml
+             - name: CONTAINERD_SOCKET
+               value: /run/k0s/containerd.sock
