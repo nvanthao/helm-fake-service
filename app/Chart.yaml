@@ -27,7 +27,3 @@ dependencies:
   - name: replicated
     repository: oci://registry.replicated.com/library
     version: 1.0.0-beta.31
-  - name: cert-manager
-    version: v1.17.0
-    repository: https://charts.jetstack.io
-    condition: cert-manager.enabled
