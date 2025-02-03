@@ -15,5 +15,4 @@ spec:
     global:
       imagePullSecrets:
         - name: repl{{ ImagePullSecretName }}
-    cert-manager:
-      installCRDs: true
+    installCRDs: true
