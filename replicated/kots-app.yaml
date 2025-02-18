@@ -10,3 +10,4 @@ spec:
     - deployment/backend
   additionalImages:
     - curlimages/curl:latest
+  allowRollback: true
