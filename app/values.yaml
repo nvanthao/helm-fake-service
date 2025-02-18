@@ -7,14 +7,14 @@ image:
 
 frontend:
   name: "frontend"
-  message: "Hello from frontend! This is the way!"
+  message: "New frontend update"
   serverType: "http"
   logLevel: "debug"
   port: 9090
 
 backend:
   name: "backend"
-  message: "Hello from backend! This is the way!"
+  message: "New backend update"
   serverType: "http"
   logLevel: "debug"
   port: 9091
