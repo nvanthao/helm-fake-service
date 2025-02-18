@@ -7,7 +7,7 @@ image:
 
 frontend:
   name: "frontend"
-  message: "New frontend update"
+  message: "New frontend update! This is the way!"
   serverType: "http"
   logLevel: "debug"
   port: 9090
