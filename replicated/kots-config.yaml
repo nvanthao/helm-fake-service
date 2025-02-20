@@ -11,7 +11,7 @@ spec:
         - name: hostname
           title: Hostname
           type: text
-          required: false
+          required: true
         - name: password
           title: Password
           type: password
