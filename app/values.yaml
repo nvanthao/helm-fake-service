@@ -54,3 +54,6 @@ rqliteui:
 
 cert-manager:
   enabled: true
+
+ingress:
+  host: gerard-vm.testcluster.net

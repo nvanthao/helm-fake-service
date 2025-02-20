@@ -1,3 +1,4 @@
 notes.md
 *.lock
 .DS_Store
+.vscode
