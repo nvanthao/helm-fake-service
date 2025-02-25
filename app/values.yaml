@@ -40,7 +40,8 @@ ingress-nginx:
     service:
       type: NodePort
       nodePorts:
-        http: 30080
+        http: 80
+        https: 443
   ingressClassResource:
     default: true
 
