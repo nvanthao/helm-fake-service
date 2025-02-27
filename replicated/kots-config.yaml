@@ -20,10 +20,15 @@ spec:
       title: Frontend settings
       description: Frontend settings
       items:
-        - name: frontend_informer_enabled
-          title: Enable Frontend Informer
-          type: bool
-          default: "0"
+        - name: frontened_informer_enabled
+          type: radio
+          title: Frontend Informer Enabled
+          default: no
+          items:
+            - name: no
+              title: No
+            - name: yes
+              title: Yes
         - name: frontend_name
           title: Service Name
           type: text
