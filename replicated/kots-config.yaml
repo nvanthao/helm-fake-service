@@ -26,9 +26,9 @@ spec:
           default: noooo
           items:
             - name: noooo
-              title: No
+              title: Noooo
             - name: yessss
-              title: Yes
+              title: Yessss
         - name: frontend_name
           title: Service Name
           type: text
