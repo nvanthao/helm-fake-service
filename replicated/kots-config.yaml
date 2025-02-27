@@ -20,7 +20,7 @@ spec:
       title: Frontend settings
       description: Frontend settings
       items:
-        - name: frontened_informer_enabled
+        - name: frontend_informer_enabled
           type: radio
           title: Frontend Informer Enabled
           default: noooo
