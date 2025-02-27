@@ -23,11 +23,11 @@ spec:
         - name: frontened_informer_enabled
           type: radio
           title: Frontend Informer Enabled
-          default: no
+          default: noooo
           items:
-            - name: no
+            - name: noooo
               title: No
-            - name: yes
+            - name: yessss
               title: Yes
         - name: frontend_name
           title: Service Name
