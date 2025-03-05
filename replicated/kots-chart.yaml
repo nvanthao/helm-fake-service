@@ -49,3 +49,6 @@ spec:
           - name: "{{repl ImagePullSecretName }}"
     ingress:
       host: '{{repl ConfigOption "hostname" }}'
+    replicated:
+      podLabels:
+        message: thisistheway
