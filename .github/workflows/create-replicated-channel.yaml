@@ -1,4 +1,4 @@
-name: Create Replicated Channel for New Branch
+name: create-replicated-channel-by-branch
 
 on:
   create:
