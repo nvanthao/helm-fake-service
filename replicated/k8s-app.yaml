@@ -7,4 +7,4 @@ spec:
   descriptor:
     links:
       - description: Open App
-        url: https://repl{{ ConfigOption "hostname" }}
+        url: http://localhost:3000
