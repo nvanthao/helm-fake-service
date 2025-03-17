@@ -51,3 +51,13 @@ replicated-promote:
 
 sync-platform-examples:
 	rsync -av --exclude '.git' --exclude '.gitignore' . /Users/gerard/dev/platform-examples/applications/fake-services/
+
+dagger-lint:
+	dagger call lint
+
+dagger-package:
+	dagger call package export --path app.tar.gz
+	helm show chart app.tar.gz
+
+dagger-create-replicated-release:
+	dagger call create-replicated-release --token=env://REPLICATED_API_TOKEN
