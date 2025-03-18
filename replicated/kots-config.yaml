@@ -4,118 +4,30 @@ metadata:
   name: fake-service
 spec:
   groups:
-    - name: Global settings
-      title: Global settings
-      description: Global settings
+    - name: example_group
+      title: First Group
       items:
-        - name: hostname
-          title: Hostname
-          type: text
-          required: true
-        - name: password
-          title: Password
-          type: password
-          required: false
-    - name: Frontend settings
-      title: Frontend settings
-      description: Frontend settings
+      - name: http_enabled
+        title: HTTP Enabled
+        type: bool
+        default: "0"
+    - name: example_group_2
+      title: Second Group
+      when: false
       items:
-        - name: frontend_informer_enabled
-          type: radio
-          title: Frontend Informer Enabled
-          default: noooo
-          items:
-            - name: noooo
-              title: Noooo
-            - name: yessss
-              title: Yessss
-        - name: frontend_name
-          title: Service Name
-          type: text
-          required: true
-        - name: frontend_message
-          title: Message
-          type: text
-          required: true
-          default: TEST DAGGERIZE!!!
-        - name: frontend_log_level
-          title: Log level
-          type: radio
-          default: debug
-          items:
-            - name: debug
-              title: Debug
-            - name: info
-              title: Info
-            - name: warn
-              title: Warn
-            - name: error
-              title: Error
-            - name: trace
-              title: Trace
-    - name: Backend settings
-      title: Backend settings
-      description: Backend settings
+      - name: key
+        title: Key
+        type: textarea
+      - name: hostname
+        title: Hostname
+        type: text  
+    - name: example_group_3
+      title: Third Group
       items:
-        - name: backend_name
-          title: Service Name
-          type: text
-          required: true
-        - name: backend_message
-          title: Message
-          type: text
-          required: true
-          default: Hello from backend! Happy New Year!
-        - name: backend_log_level
-          title: Log level
-          type: radio
-          default: debug
-          items:
-            - name: debug
-              title: Debug
-            - name: info
-              title: Info
-            - name: warn
-              title: Warn
-            - name: error
-              title: Error
-            - name: trace
-              title: Trace
-        - name: backend_error_rate
-          title: Error rate
-          type: text
-          default: "0"
-          validation:
-            regex:
-              pattern: "^(0|1(\\.0)?|0\\.\\d{1,3})$"
-              message: "Decimal percentage of request where handler will report an error. e.g. 0.1 = 10% of all requests will result in an error"
-        - name: backend_origin
-          title: Allowed origins
-          type: text
-          default: "\\*"
-    # For Testing #
-    - name: storage_settings
-      title: Storage Settings
-      items:
-        - name: show_storage
-          title: Show Storage Configuration
-          type: bool
-          default: "0"
-          help_text: "Check to enable storage configuration options."
-        - name: storage_settings_timescale_retention_spacer
-          when: repl{{ ConfigOptionEquals "show_storage" "1" }}
-          type: label
-          title: " "
-        - name: storage_settings_timescale_retention_description
-          when: repl{{ ConfigOptionEquals "show_storage" "1" }}
-          type: heading
-          title: Timescale Retention Periods
-        - name: storage_settings_timescale_retention_raw
-          when: repl{{ ConfigOptionEquals "show_storage" "1" }}
-          title: Raw Metrics
-          type: text
-          value: "7d"
-          validation:
-            regex:
-              pattern: "^((([8-9]|[1-9][0-9]+)h)|([1-9][0-9]*d)|([1-9][0-9]*y))$"
-              message: "Please enter a valid retention period. The minimum is 8 hours (e.g., 8h). Example formats: 8h, 45d, 1y."
+      - name: email-address
+        title: Email Address
+        type: text  
+      - name: password_text
+        title: Password
+        type: password
+        value: '{{repl RandomString 10}}'     

@@ -27,21 +27,6 @@ func New(
 	}
 }
 
-func (m *HelmFakeService) Hello(
-	// +optional
-	// +default="Gerard"
-	name string) string {
-	return fmt.Sprintf("Hello, %s!", name)
-}
-
-func (m *HelmFakeService) Sleep(
-	// +optional
-	// +default=5
-	seconds int) string {
-	time.Sleep(time.Duration(seconds) * time.Second)
-	return fmt.Sprintf("Slept for %d seconds", seconds)
-}
-
 func (m *HelmFakeService) CreateReplicatedRelease(ctx context.Context, token *dagger.Secret) (string, error) {
 	version := m.generateVersion(ctx)
 	packagedDir := m.PrepareReplicatedRelease(ctx, version)
