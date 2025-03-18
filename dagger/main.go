@@ -27,17 +27,28 @@ func New(
 	}
 }
 
-func (m *HelmFakeService) CreateReplicatedRelease(ctx context.Context, token *dagger.Secret) (string, error) {
-	version := m.generateVersion(ctx)
-	packagedDir := m.PrepareReplicatedRelease(ctx, version)
-
+func (m *HelmFakeService) CreateReplicatedRelease(ctx context.Context, token *dagger.Secret, version, channel string) (string, error) {
+	versionStr := m.generateVersion(ctx, version)
+	packagedDir := m.PrepareReplicatedRelease(ctx, versionStr)
 	return dag.Container().
 		From("replicated/vendor-cli:latest").
 		WithDirectory("/src", packagedDir).
 		WithEnvVariable("REPLICATED_APP", REPLICATED_APP).
 		WithSecretVariable("REPLICATED_API_TOKEN", token).
-		WithExec([]string{"/replicated", "release", "create", "--yaml-dir", "/src", "--promote", "Unstable", "--version", version}).
+		WithExec([]string{"/replicated", "release", "create", "--yaml-dir", "/src", "--promote", channel, "--version", version, "--ensure-channel"}).
 		Stdout(ctx)
+}
+
+func (m *HelmFakeService) DownloadLicense(ctx context.Context, token *dagger.Secret, channel string) *dagger.File {
+	// create customer and download license
+	customerName := fmt.Sprintf("%s-customer", channel)
+	return dag.Container().
+		From("replicated/vendor-cli:latest").
+		WithEnvVariable("REPLICATED_APP", REPLICATED_APP).
+		WithSecretVariable("REPLICATED_API_TOKEN", token).
+		WithExec([]string{"/replicated", "customer", "create", "--name", customerName, "--channel", channel}).
+		WithExec([]string{"/replicated", "customer", "download-license", "--customer", customerName, "--output", "license.yaml"}).
+		File("license.yaml")
 }
 
 func (m *HelmFakeService) PrepareReplicatedRelease(ctx context.Context, version string) *dagger.Directory {
@@ -84,24 +95,14 @@ func (m *HelmFakeService) Package(ctx context.Context, version string) *dagger.F
 }
 
 func (m *HelmFakeService) chart() *dagger.HelmChart {
-	chart := m.Source.Directory("app")
+	chart := m.Source.Directory("fake-service")
 	return dag.Helm(dagger.HelmOpts{
 		Version: "3.17.1",
 	}).Chart(chart)
 }
 
 // Generates a version string based on the current date, branch name, and commit hash
-func (m *HelmFakeService) generateVersion(ctx context.Context) string {
-	// yyyy.mm.dd.hhmmss-<branch_name>-hash
-	date := time.Now().Format("2006.01.02-150405")
-	branch, err := dag.GitInfo(m.Source).Branch(ctx)
-	if err != nil {
-		log.Fatalf("Failed to get branch: %v", err)
-	}
-	hash, err := dag.GitInfo(m.Source).CommitHash(ctx)
-	if err != nil {
-		log.Fatalf("Failed to get commit hash: %v", err)
-	}
-	hash = hash[:7]
-	return fmt.Sprintf("%s-%s-%s", date, branch, hash)
+func (m *HelmFakeService) generateVersion(ctx context.Context, version string) string {
+	date := time.Now().Format("20060102-150405")
+	return fmt.Sprintf("%s-%s", version, date)
 }
