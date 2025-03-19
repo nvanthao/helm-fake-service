@@ -1,0 +1,16 @@
+apiVersion: skaffold/v4beta12
+kind: Config
+deploy:
+  helm:
+    releases:
+      - name: fake-service
+        chartPath: ./fake-service
+        valuesFiles:
+          - ./dev-values.yaml
+          - ./replicated_values.yaml
+        namespace: default
+  # Skip building images completely
+build:
+  local:
+    push: false
+  artifacts: []
