@@ -89,8 +89,9 @@ func (m *HelmFakeService) Lint(ctx context.Context) (string, error) {
 func (m *HelmFakeService) Package(ctx context.Context, version string) *dagger.File {
 	chart := m.chart()
 	return chart.Package(dagger.HelmChartPackageOpts{
-		Version:    version,
-		AppVersion: version,
+		Version:          version,
+		AppVersion:       version,
+		DependencyUpdate: true,
 	}).File()
 }
 
