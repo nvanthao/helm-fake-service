@@ -6,3 +6,6 @@ CHANNEL ?= Unstable
 reproducing:
 	dagger call create-replicated-release --token=env://REPLICATED_API_TOKEN --version=$(VERSION) --channel=$(CHANNEL)
 	dagger call download-license --token=env://REPLICATED_API_TOKEN --channel=$(CHANNEL) export --path=./license.yaml
+
+bump:
+	dagger call create-replicated-release --token=env://REPLICATED_API_TOKEN --version=$(VERSION) --channel=$(CHANNEL)
