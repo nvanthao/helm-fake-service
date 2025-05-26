@@ -1,5 +1,5 @@
 VERSION ?= 0.0.1
-CHANNEL ?= Unstable
+CHANNEL ?= $(shell git rev-parse --abbrev-ref HEAD)
 
 # reproduce the issue
 # make reproducing VERSION=0.0.1 CHANNEL=appen-123
