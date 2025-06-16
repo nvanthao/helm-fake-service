@@ -60,3 +60,33 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Image Pull Secrets
+*/}}
+{{- define "helpers.imagePullSecrets" -}}
+{{- $pullSecrets := list -}}
+
+{{/* Add existing imagePullSecrets if defined */}}
+{{- if .Values.image.imagePullSecrets -}}
+{{- $pullSecrets = concat $pullSecrets .Values.image.imagePullSecrets -}}
+{{- end -}}
+
+{{/* Add replicated pull secret if global dockerconfigjson is defined */}}
+{{- if hasKey .Values "global" -}}
+{{- if hasKey .Values.global "replicated" -}}
+{{- if .Values.global.replicated.dockerconfigjson -}}
+{{- $replicatedSecret := dict "name" "replicated-pull-secret" -}}
+{{- $pullSecrets = append $pullSecrets $replicatedSecret -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Output the imagePullSecrets block only if we have any secrets */}}
+{{- if $pullSecrets -}}
+imagePullSecrets:
+{{- range $pullSecrets }}
+  - name: {{ .name }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
