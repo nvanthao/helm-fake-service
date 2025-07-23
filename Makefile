@@ -15,3 +15,6 @@ reproducing:
 # bump the version and create a new release
 bump:
 	dagger call create-replicated-release --token=env://REPLICATED_API_TOKEN --version=$(VERSION) --channel=$(CHANNEL)
+
+download-license:
+	dagger call download-license --token=env://REPLICATED_API_TOKEN --channel=$(CHANNEL) export --path=./license.yaml
