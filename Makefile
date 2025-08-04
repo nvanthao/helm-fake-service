@@ -7,8 +7,9 @@ APP_SLUG ?= gerard-helm-fake-service
 reproducing:
 	dagger call create-replicated-release --token=env://REPLICATED_API_TOKEN --version=$(VERSION) --channel=$(CHANNEL)
 	dagger call download-license --token=env://REPLICATED_API_TOKEN --channel=$(CHANNEL) export --path=./license.yaml
-	replicated vm create --distribution ubuntu --version 24.04 --instance-type r1.xlarge --disk 100 --name gerard-vm --ttl 8h
 
+create-cmx-vm:
+	replicated vm create --distribution ubuntu --version 24.04 --instance-type r1.xlarge --disk 100 --name gerard-vm --ttl 8h
 	echo "SSH into VM and run:"
 	echo "curl -f \"https://replicated.app/embedded/$(APP_SLUG)/$(CHANNEL)\" -H \"Authorization: $$(cat license.yaml | yq .spec.licenseID)\" -o $(APP_SLUG)-$(CHANNEL).tgz"
 
