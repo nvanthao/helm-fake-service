@@ -20,6 +20,8 @@ bump:
 download-license:
 	dagger call download-license --token=env://REPLICATED_API_TOKEN --channel=$(CHANNEL) export --path=./license.yaml
 
-install-guide:
+install-ec:
 	echo "curl -f \"https://replicated.app/embedded/$(APP_SLUG)/$(CHANNEL)\" -H \"Authorization: $$(cat license.yaml | yq .spec.licenseID)\" -o $(APP_SLUG)-$(CHANNEL).tgz"
 
+install-kots:
+	echo "kubectl kots install $(APP_SLUG)/$(CHANNEL) --license-file license.yaml --namespace foo --shared-password 123456"
