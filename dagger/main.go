@@ -5,7 +5,6 @@ import (
 	"dagger/helm-fake-service/internal/dagger"
 	"fmt"
 	"log"
-	"time"
 )
 
 type HelmFakeService struct {
@@ -102,8 +101,8 @@ func (m *HelmFakeService) chart() *dagger.HelmChart {
 	}).Chart(chart)
 }
 
-// Generates a version string based on the current date, branch name, and commit hash
 func (m *HelmFakeService) generateVersion(ctx context.Context, version string) string {
-	date := time.Now().Format("20060102-150405")
-	return fmt.Sprintf("%s-%s", version, date)
+	// date := time.Now().Format("20060102-150405")
+	// return fmt.Sprintf("%s-%s", version, date)
+	return version
 }
