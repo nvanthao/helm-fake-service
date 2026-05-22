@@ -3,3 +3,5 @@ notes.md
 .DS_Store
 .vscode
 license.yaml
+*.tgz
+.release-tmp/
