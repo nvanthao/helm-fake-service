@@ -21,24 +21,24 @@ lint:
     helm lint {{CHART_DIR}}
 
 # Package the Helm chart with dependencies
-package:
+package version=VERSION:
     helm dependency update {{CHART_DIR}}
-    helm package {{CHART_DIR}} --version {{VERSION}} --app-version {{VERSION}}
+    helm package {{CHART_DIR}} --version {{version}} --app-version {{version}}
 
 # Prepare the release directory: update kots-chart.yaml version and copy manifests + packaged chart
-prepare-release: package
+prepare-release version=VERSION: (package version)
     rm -rf {{RELEASE_TMP}}
     mkdir -p {{RELEASE_TMP}}
     cp {{REPLICATED_DIR}}/* {{RELEASE_TMP}}/
-    yq -i '.spec.chart.chartVersion = "{{VERSION}}"' {{RELEASE_TMP}}/kots-chart.yaml
-    cp fake-service-{{VERSION}}.tgz {{RELEASE_TMP}}/
+    yq -i '.spec.chart.chartVersion = "{{version}}"' {{RELEASE_TMP}}/kots-chart.yaml
+    cp fake-service-{{version}}.tgz {{RELEASE_TMP}}/
 
 # Create a Replicated release and promote it to the specified channel
-create-release: prepare-release
+create-release version=VERSION: (prepare-release version)
     replicated release create \
         --yaml-dir {{RELEASE_TMP}} \
         --promote {{CHANNEL}} \
-        --version {{VERSION}} \
+        --version {{version}} \
         --ensure-channel
 
 # Download a license for the specified channel
@@ -50,10 +50,10 @@ download-license:
     replicated customer download-license --customer "${CUSTOMER_NAME}" --output license.yaml
 
 # Bump the version and create a new release
-bump: create-release
+bump version=VERSION: (create-release version)
 
 # Reproduce a release: create it and download the license
-reproducing: create-release download-license
+reproducing version=VERSION: (create-release version) download-license
 
 # Clean up temporary artifacts
 clean:

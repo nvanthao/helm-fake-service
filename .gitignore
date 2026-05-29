@@ -5,3 +5,4 @@ notes.md
 license.yaml
 *.tgz
 .release-tmp/
+.envrc
