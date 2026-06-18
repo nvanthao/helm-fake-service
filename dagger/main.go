@@ -29,7 +29,7 @@ func New(
 func (m *HelmFakeService) CreateReplicatedRelease(ctx context.Context, token *dagger.Secret, version, channel string) (string, error) {
 	versionStr := m.generateVersion(ctx, version)
 	packagedDir := m.PrepareReplicatedRelease(ctx, versionStr)
-	return dag.Container().
+	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
 		From("replicated/vendor-cli:latest").
 		WithDirectory("/src", packagedDir).
 		WithEnvVariable("REPLICATED_APP", REPLICATED_APP).
@@ -41,7 +41,7 @@ func (m *HelmFakeService) CreateReplicatedRelease(ctx context.Context, token *da
 func (m *HelmFakeService) DownloadLicense(ctx context.Context, token *dagger.Secret, channel string) *dagger.File {
 	// create customer and download license
 	customerName := fmt.Sprintf("%s-customer", channel)
-	return dag.Container().
+	return dag.Container(dagger.ContainerOpts{Platform: "linux/amd64"}).
 		From("replicated/vendor-cli:latest").
 		WithEnvVariable("REPLICATED_APP", REPLICATED_APP).
 		WithSecretVariable("REPLICATED_API_TOKEN", token).
